@@ -1,2 +1,5 @@
 # mLPlayground
-a code set for machine learning 
+a code set for machine learning
+
+# version
+python 2.7.x
