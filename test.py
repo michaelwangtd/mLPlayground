@@ -3,4 +3,7 @@
 
 import index
 
-print index.rootPath
+# print index.rootPath
+
+for i in range(12,0,-1):
+    print i

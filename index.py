@@ -11,4 +11,5 @@ rootPath = os.path.dirname(__file__)
 # data
 DATA = 'data'
 REGRESSION = 'regression'
-DECISIONTREE = 'decisionTree'
+DECISIONTREE = 'decisiontree'
+TIMESERIES = 'timeseries'
