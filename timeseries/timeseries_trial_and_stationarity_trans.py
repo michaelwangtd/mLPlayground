@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import matplotlib as mpl
 from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.seasonal import seasonal_decompose
 
 """
     这里结合http://www.cnblogs.com/foley/p/5582358.html这篇文章对时间序列类型的问题进行了尝试
@@ -30,7 +31,6 @@ if __name__ == '__main__':
     # print ts.head()   #读取前5列
     # print ts.head().index     #读取前5列的索引
 
-    plt.figure('white')
     ## 2 时间序列平稳性处理
     tidx = data.index
     # 2.1 对数变换减小振幅
@@ -48,10 +48,17 @@ if __name__ == '__main__':
     diff_12.dropna(inplace=True)   # inplace:将结果付给调用函数变量本身
     diff_12_1 = diff_12.diff(1)
     diff_12_1.dropna(inplace=True)
-    print '差分结果：',diff_12_1
+    # print '差分结果：',diff_12_1
+    # 2.4 时间序列分解
+    decomposition_add = seasonal_decompose(ts_log,model='additive')     # 加法模型分解
+    decomposition_multi = seasonal_decompose(ts_log,model='multiplicative')
+    trend = decomposition_add.trend
+    seasonal = decomposition_add.seasonal
+    residual = decomposition_add.resid
+    # print type(trend)
 
-
-
+    ## 窗口图一
+    plt.figure('white')
     plt.subplot(4,1,1)
     plt.plot(tidx,ts,'-g',label=u'原始时间序列')
     plt.legend(loc='best')
@@ -67,8 +74,21 @@ if __name__ == '__main__':
     plt.plot(tidx,ts_log,'-g',label=u'对数时间序列')
     diff_12_1.plot(color='red',label=u'差分')
     plt.legend(loc='best')
-
-
+    plt.show()
+    ## 窗口图二
+    plt.figure('white')
+    plt.subplot(4,1,1)
+    ts_log.plot(color='blue',label=u'对数时间序列')
+    plt.legend(loc='best')
+    plt.subplot(4,1,2)
+    trend.plot(color='blue',label=u'长期趋势')
+    plt.legend(loc='best')
+    plt.subplot(4,1,3)
+    seasonal.plot(color='blue',label=u'周期趋势')
+    plt.legend(loc='best')
+    plt.subplot(4,1,4)
+    residual.plot(color='blue',label=u'随机扰动')
+    plt.legend(loc='best')
     plt.show()
 
 
