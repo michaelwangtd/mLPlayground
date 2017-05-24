@@ -20,8 +20,8 @@ if __name__ == '__main__':
     mpl.rcParams['font.sans-serif'] = [u'SimHei']
     mpl.rcParams['axes.unicode_minus'] = False
     # 1 读入数据
-    # inFileName = 'O1005-O1005_model_trial.csv'
-    inFileName = 'O1002-PAX_model_trial.csv'
+    inFileName = 'O1005-O1005_model_trial.csv'
+    # inFileName = 'O1002-PAX_model_trial.csv'
     inFilePath = inout.getDataPathTimeseries(inFileName)
     data = pd.read_csv(inFilePath,header=None)
     # 2 数据转换成时间序列
@@ -115,6 +115,7 @@ if __name__ == '__main__':
         print '---y_hat: ',type(y_hat),y_hat
         ts_predict.append(y_hat[0])
         # ts_history.append(y_hat[0])
+        ## 这里获取的ts_test[i]是已知的训练数据,若换成上面一行，效果太差
         ts_history.append(ts_test[i])
     print type(ts_predict),ts_predict
 
